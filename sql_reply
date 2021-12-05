@@ -1,0 +1,14 @@
+SELECT
+s.name
+, avg(t."цена энергии за 1 час")
+, sum(t."цена энергии за 1 час" * u."кол-во потребленной энергии за 1 час")
+
+FROM station s
+LEFT JOIN tarif t
+ON s.id = t.station_id
+
+LEFT JOIN "Потребление" u
+ON u.tarif_name = t.name
+AND u."расчетный час" = t."окончание тарификации"
+
+GROUP BY s.name
